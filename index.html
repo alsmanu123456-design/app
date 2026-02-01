@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نيمار استور | Neymar Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #FFD700;
+            --secondary: #FFA500;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --card: #111111;
+            --text: #ffffff;
+            --text-gray: #888888;
+            --success: #00C851;
+            --danger: #ff4444;
+            --info: #33b5e5;
+        }
+
+        body {
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--dark);
+            font-weight: 900;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .contact-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 50%, var(--dark) 100%);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .hero h2 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-gray);
+        }
+
+        /* Offers Banner */
+        .offers-banner {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            animation: slide 10s linear infinite;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Section Title */
+        .section-title {
+            padding: 20px 15px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h3 {
+            font-size: 18px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title h3 i {
+            color: var(--primary);
+        }
+
+        .view-all {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .game-card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--card), rgba(255,215,0,0.1));
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .game-card:active::before {
+            left: 100%;
+        }
+
+        .game-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .game-card.pubg .game-icon { background: linear-gradient(135deg, #f4d03f, #e67e22); color: #2c3e50; }
+        .game-card.freefire .game-icon { background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; }
+        .game-card.coc .game-icon { background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; }
+
+        .game-name {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .game-desc {
+            font-size: 10px;
+            color: var(--text-gray);
+        }
+
+        .hot-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* Products Section */
+        .products-container {
+            padding: 0 15px;
+        }
+
+        .product-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #222;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .product-info h4 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .discount-badge {
+            background: var(--danger);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .price-tag {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .current-price {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .current-price span {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .old-price {
+            font-size: 16px;
+            color: var(--text-gray);
+            text-decoration: line-through;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .buy-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Accounts Section */
+        .accounts-section {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 20px 15px;
+            margin: 20px 0;
+        }
+
+        .account-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .account-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .account-img {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .account-details h4 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .account-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .account-meta span {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .account-price {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--primary);
+            text-align: left;
+        }
+
+        /* Payment Methods */
+        .payment-section {
+            padding: 0 15px;
+            margin: 20px 0;
+        }
+
+        .payment-card {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--primary);
+        }
+
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: 900;
+        }
+
+        .payment-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .payment-card p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .account-number {
+            background: rgba(255,215,0,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: monospace;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border: 1px dashed var(--primary);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Order Form Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-gray);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: var(--card);
+            border: 2px solid #333;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .file-upload {
+            border: 2px dashed #444;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload.active {
+            border-color: var(--primary);
+            background: rgba(255,215,0,0.05);
+        }
+
+        .file-upload i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .file-upload p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .submit-order {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+            position: sticky;
+            bottom: 20px;
+        }
+
+        .submit-order:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-content {
+            text-align: center;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            margin: 0 auto 20px;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .success-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .success-content p {
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark);
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        /* Top Up Wallet Section */
+        .wallet-section {
+            background: linear-gradient(135deg, #2d3436, #000000);
+            padding: 20px 15px;
+            margin: 20px 0;
+        }
+
+        .wallet-card {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .wallet-balance {
+            font-size: 32px;
+            font-weight: 900;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wallet-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4000;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,215,0,0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--success);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            z-index: 5000;
+            opacity: 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,200,81,0.4);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 380px) {
+            .games-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .game-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .game-name {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    <h1>نيمار استور</h1>
+                    <span>NEYMAR STORE</span>
+                </div>
+            </div>
+            <button class="contact-btn" onclick="contactSupport()">
+                <i class="fas fa-headset"></i>
+                12 936 1175
+            </button>
+        </div>
+    </header>
+
+    <!-- Offers Banner -->
+    <div class="offers-banner">
+        🔥 عروض خاصة: خصم 20% على شحن ببجي اليوم فقط! 🔥 عروض خاصة: خصم 20% على شحن ببجي اليوم فقط!
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">⚡ شحن فوري 24/7</span>
+            <h2>أفضل متجر<br><span>شحن الألعاب</span></h2>
+            <p>شحن سريع وآمن لجميع الألعاب في السودان</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">+10K</span>
+                    <span class="stat-label">عميل سعيد</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5⭐</span>
+                    <span class="stat-label">تقييم التطبيق</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">دعم فني</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Selection -->
+    <div class="section-title">
+        <h3><i class="fas fa-gamepad"></i> اختر اللعبة</h3>
+    </div>
+    <div class="games-grid">
+        <div class="game-card pubg active" onclick="selectGame('pubg')">
+            <span class="hot-badge">HOT</span>
+            <div class="game-icon">P</div>
+            <div class="game-name">ببجي موبايل</div>
+            <div class="game-desc">شحن UC</div>
+        </div>
+        <div class="game-card freefire" onclick="selectGame('freefire')">
+            <div class="game-icon">F</div>
+            <div class="game-name">فري فاير</div>
+            <div class="game-desc">شحن جواهر</div>
+        </div>
+        <div class="game-card coc" onclick="selectGame('coc')">
+            <div class="game-icon">C</div>
+            <div class="game-name">كلاش أوف كلانس</div>
+            <div class="game-desc">شحن جواهر</div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="section-title">
+        <h3><i class="fas fa-fire"></i> الباقات المتاحة</h3>
+        <a href="#" class="view-all">عرض الكل</a>
+    </div>
+    <div class="products-container" id="productsContainer">
+        <!-- PUBG Products -->
+        <div class="product-card" data-game="pubg">
+            <div class="product-header">
+                <div class="product-info">
+                    <h4><i class="fas fa-coins" style="color: #f4d03f;"></i> 60 UC</h4>
+                    <p>شحن مباشر + هدية مجانية</p>
+                </div>
+                <span class="discount-badge">-15%</span>
+            </div>
+            <div class="price-tag">
+                <span class="current-price">2,500 <span>جنيه</span></span>
+                <span class="old-price">3,000 جنيه</span>
+            </div>
+            <button class="buy-btn" onclick="openOrderModal('ببجي موبايل', '60 UC', '2500')">
+                <i class="fas fa-bolt"></i>
+                اشتر الآن
+            </button>
+        </div>
+
+        <div class="product-card" data-game="pubg">
+            <div class="product-header">
+                <div class="product-info">
+                    <h4><i class="fas fa-coins" style="color: #f4d03f;"></i> 325 UC</h4>
+                    <p>الأكثر مبيعاً + بوبجي بلس</p>
+                </div>
+                <span class="discount-badge">-20%</span>
+            </div>
+            <div class="price-tag">
+                <span class="current-price">12,000 <span>جنيه</span></span>
+                <span class="old-price">15,000 جنيه</span>
+            </div>
+            <button class="buy-btn" onclick="openOrderModal('ببجي موبايل', '325 UC', '12000')">
+                <i class="fas fa-bolt"></i>
+                اشتر الآن
+            </button>
+        </div>
+
+        <div class="product-card" data-game="pubg">
+            <div class="product-header">
+                <div class="product-info">
+                    <h4><i class="fas fa-crown" style="color: #f4d03f;"></i> 1800 UC</h4>
+                    <p>باقة المحترفين + مكافآت حصرية</p>
+                </div>
+                <span class="discount-badge">-25%</span>
+            </div>
+            <div class="price-tag">
+                <span class="current-price">55,000 <span>جنيه</span></span>
+                <span class="old-price">70,000 جنيه</span>
+            </div>
+            <button class="buy-btn" onclick="openOrderModal('ببجي موبايل', '1800 UC', '55000')">
+                <i class="fas fa-bolt"></i>
+                اشتر الآن
+            </button>
+        </div>
+    </div>
+
+    <!-- Wallet Top Up Section -->
+    <div class="wallet-section">
+        <div class="section-title" style="padding: 0 0 15px 0;">
+            <h3 style="color: white;"><i class="fas fa-wallet"></i> شحن المحفظة</h3>
+        </div>
+        <div class="wallet-card">
+            <div class="wallet-header">
+                <span class="wallet-title">رصيد محفظة التوب اب</span>
+                <i class="fas fa-wallet" style="font-size: 24px;"></i>
+            </div>
+            <div class="wallet-balance">0.00 ج.س</div>
+            <button class="wallet-btn" onclick="openOrderModal('محفظة التوب اب', 'شحن رصيد', '0')">
+                <i class="fas fa-plus-circle"></i> شحن الرصيد الآن
+            </button>
+        </div>
+    </div>
+
+    <!-- Accounts Section -->
+    <div class="section-title">
+        <h3><i class="fas fa-user-shield"></i> حسابات للبيع</h3>
+        <a href="#" class="view-all">عرض الكل</a>
+    </div>
+    <div class="accounts-section">
+        <div class="account-card">
+            <div class="account-header">
+                <div class="account-img">FF</div>
+                <div class="account-details" style="flex: 1;">
+                    <h4>حساب فري فاير أسطوري</h4>
+                    <div class="account-meta">
+                        <span><i class="fas fa-star"></i> لفل 80</span>
+                        <span><i class="fas fa-tshirt"></i> 50 سكن</span>
+                        <span><i class="fas fa-gun"></i> 30 سلاح</span>
+                    </div>
+                    <div class="account-price" style="margin-top: 10px;">45,000 ج.س</div>
+                </div>
+            </div>
+            <button class="buy-btn" onclick="openOrderModal('حساب فري فاير', 'حساب لفل 80', '45000')" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                <i class="fas fa-shopping-cart"></i> شراء الحساب
+            </button>
+        </div>
+
+        <div class="account-card">
+            <div class="account-header">
+                <div class="account-img" style="background: linear-gradient(135deg, #f4d03f, #e67e22); color: #2c3e50;">P</div>
+                <div class="account-details" style="flex: 1;">
+                    <h4>حساب ببجي كونكر</h4>
+                    <div class="account-meta">
+                        <span><i class="fas fa-trophy"></i> كونكر</span>
+                        <span><i class="fas fa-tshirt"></i> 100 سكن</span>
+                        <span><i class="fas fa-car"></i> 20 سيارة</span>
+                    </div>
+                    <div class="account-price" style="margin-top: 10px;">120,000 ج.س</div>
+                </div>
+            </div>
+            <button class="buy-btn" onclick="openOrderModal('حساب ببجي', 'حساب كونكر', '120000')" style="background: linear-gradient(135deg, #f4d03f, #e67e22); color: #2c3e50;">
+                <i class="fas fa-shopping-cart"></i> شراء الحساب
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="section-title">
+        <h3><i class="fas fa-university"></i> طرق الدفع</h3>
+    </div>
+    <div class="payment-section">
+        <div class="payment-card">
+            <div class="bank-logo">B</div>
+            <h4>بنك الخرطوم</h4>
+            <p>Bankak - بنكك</p>
+            <div class="account-number" id="accountNum">2991116</div>
+            <button class="copy-btn" onclick="copyAccount()">
+                <i class="fas fa-copy"></i> نسخ الرقم
+            </button>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إتمام الطلب</h2>
+                <button class="close-btn" onclick="closeOrderModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="product-summary" style="background: var(--card); padding: 20px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--primary);">
+                <h4 style="margin-bottom: 10px; color: var(--primary);" id="modalProductName">اسم المنتج</h4>
+                <p style="color: var(--text-gray); font-size: 14px;" id="modalProductDetails">تفاصيل المنتج</p>
+                <div style="margin-top: 15px; font-size: 24px; font-weight: 900; color: var(--primary);" id="modalPrice">0 جنيه</div>
+            </div>
+
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="customerName" required placeholder="أدخل اسمك الثلاثي">
+                </div>
+
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="customerPhone" required placeholder="مثال: 0912345678" pattern="[0-9]{10}">
+                </div>
+
+                <div class="form-group">
+                    <label>ايدي اللعبة (ID)</label>
+                    <input type="text" id="gameId" required placeholder="أدخل ايدي حسابك في اللعبة">
+                </div>
+
+                <div class="form-group">
+                    <label>اسم اللاعب في اللعبة</label>
+                    <input type="text" id="gameName" required placeholder="الاسم الظاهر في اللعبة">
+                </div>
+
+                <div class="form-group">
+                    <label>صورة إشعار التحويل البنكي</label>
+                    <div class="file-upload" onclick="document.getElementById('paymentProof').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>اضغط هنا لرفع صورة الإشعار</p>
+                        <small style="color: var(--text-gray);">JPG, PNG (Max 5MB)</small>
+                        <input type="file" id="paymentProof" accept="image/*" required onchange="previewImage(this)">
+                        <img class="preview-image" id="previewImg">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-order" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> إرسال الطلب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3>تم إرسال طلبك بنجاح!</h3>
+            <p>سيتم مراجعة الإشعار البنكي وشحن حسابك خلال دقائق</p>
+            <a href="https://t.me/your_bot_username" class="telegram-btn" target="_blank">
+                <i class="fab fa-telegram"></i>
+                متابعة الطلب في Telegram
+            </a>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">تم النسخ بنجاح!</div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="setActiveNav(this)">
+            <i class="fas fa-home"></i>
+            الرئيسية
+        </a>
+        <a href="#" class="nav-item" onclick="setActiveNav(this)">
+            <i class="fas fa-fire"></i>
+            العروض
+        </a>
+        <a href="#" class="nav-item" onclick="setActiveNav(this)">
+            <i class="fas fa-shopping-bag"></i>
+            طلباتي
+        </a>
+        <a href="#" class="nav-item" onclick="setActiveNav(this)">
+            <i class="fas fa-user"></i>
+            حسابي
+        </a>
+    </nav>
+
+    <script>
+        // Game Data
+        const gamesData = {
+            pubg: [
+                { name: '60 UC', price: '2,500', oldPrice: '3,000', discount: '-15%', icon: 'fa-coins', color: '#f4d03f', desc: 'شحن مباشر + هدية مجانية' },
+                { name: '325 UC', price: '12,000', oldPrice: '15,000', discount: '-20%', icon: 'fa-coins', color: '#f4d03f', desc: 'الأكثر مبيعاً + بوبجي بلس' },
+                { name: '660 UC', price: '22,000', oldPrice: '28,000', discount: '-21%', icon: 'fa-coins', color: '#f4d03f', desc: 'باقة متوسطة + هدايا' },
+                { name: '1800 UC', price: '55,000', oldPrice: '70,000', discount: '-25%', icon: 'fa-crown', color: '#f4d03f', desc: 'باقة المحترفين + مكافآت حصرية' },
+                { name: '3850 UC', price: '110,000', oldPrice: '140,000', discount: '-27%', icon: 'fa-crown', color: '#f4d03f', desc: 'باقة ضخمة + سكنات نادرة' },
+                { name: '8100 UC', price: '220,000', oldPrice: '290,000', discount: '-30%', icon: 'fa-gem', color: '#f4d03f', desc: 'الباقة الأسطورية + VIP' }
+            ],
+            freefire: [
+                { name: '100 جوهرة', price: '1,800', oldPrice: '2,200', discount: '-18%', icon: 'fa-gem', color: '#ff6b6b', desc: 'شحن سريع' },
+                { name: '310 جواهر', price: '5,000', oldPrice: '6,500', discount: '-23%', icon: 'fa-gem', color: '#ff6b6b', desc: 'الأكثر طلباً' },
+                { name: '520 جوهرة', price: '8,000', oldPrice: '10,500', discount: '-24%', icon: 'fa-gem', color: '#ff6b6b', desc: 'باقة مميزة' },
+                { name: '1060 جوهرة', price: '15,000', oldPrice: '20,000', discount: '-25%', icon: 'fa-crown', color: '#ff6b6b', desc: 'باقة المحترفين' },
+                { name: '2180 جوهرة', price: '30,000', oldPrice: '40,000', discount: '-30%', icon: 'fa-crown', color: '#ff6b6b', desc: 'باقة ضخمة' },
+                { name: '5600 جوهرة', price: '75,000', oldPrice: '100,000', discount: '-32%', icon: 'fa-star', color: '#ff6b6b', desc: 'الباقة الأسطورية' }
+            ],
+            coc: [
+                { name: '80 جوهرة', price: '2,000', oldPrice: '2,500', discount: '-20%', icon: 'fa-gem', color: '#74b9ff', desc: 'باقة صغيرة' },
+                { name: '500 جوهرة', price: '9,000', oldPrice: '12,000', discount: '-25%', icon: 'fa-gem', color: '#74b9ff', desc: 'باقة مميزة + 100 مجاناً' },
+                { name: '1200 جوهرة', price: '18,000', oldPrice: '25,000', discount: '-28%', icon: 'fa-gem', color: '#74b9ff', desc: 'باقة كبيرة + 400 مجاناً' },
+                { name: '2500 جوهرة', price: '35,000', oldPrice: '50,000', discount: '-30%', icon: 'fa-crown', color: '#74b9ff', desc: 'باقة ضخمة + 900 مجاناً' },
+                { name: '6500 جوهرة', price: '85,000', oldPrice: '120,000', discount: '-35%', icon: 'fa-crown', color: '#74b9ff', desc: 'باقة عملاقة + 2500 مجاناً' },
+                { name: '14000 جوهرة', price: '170,000', oldPrice: '250,000', discount: '-38%', icon: 'fa-star', color: '#74b9ff', desc: 'الباقة الأسطورية + 6000 مجاناً' }
+            ]
+        };
+
+        let currentGame = 'pubg';
+
+        function selectGame(game) {
+            currentGame = game;
+            
+            // Update active state
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update products
+            updateProducts(game);
+        }
+
+        function updateProducts(game) {
+            const container = document.getElementById('productsContainer');
+            const products = gamesData[game];
+            const gameNames = {
+                pubg: 'ببجي موبايل',
+                freefire: 'فري فاير',
+                coc: 'كلاش أوف كلانس'
+            };
+            
+            container.innerHTML = products.map(product => `
+                <div class="product-card" data-game="${game}">
+                    <div class="product-header">
+                        <div class="product-info">
+                            <h4><i class="fas ${product.icon}" style="color: ${product.color};"></i> ${product.name}</h4>
+                            <p>${product.desc}</p>
+                        </div>
+                        <span class="discount-badge">${product.discount}</span>
+                    </div>
+                    <div class="price-tag">
+                        <span class="current-price">${product.price} <span>جنيه</span></span>
+                        <span class="old-price">${product.oldPrice} جنيه</span>
+                    </div>
+                    <button class="buy-btn" onclick="openOrderModal('${gameNames[game]}', '${product.name}', '${product.price.replace(',', '')}')">
+                        <i class="fas fa-bolt"></i>
+                        اشتر الآن
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openOrderModal(game, product, price) {
+            document.getElementById('modalProductName').textContent = game;
+            document.getElementById('modalProductDetails').textContent = product;
+            document.getElementById('modalPrice').textContent = price + ' جنيه';
+            document.getElementById('orderModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('orderForm').reset();
+            document.getElementById('previewImg').style.display = 'none';
+            document.querySelector('.file-upload').classList.remove('active');
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('previewImg').style.display = 'block';
+                    document.querySelector('.file-upload').classList.add('active');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+            
+            // Collect data
+            const orderData = {
+                game: document.getElementById('modalProductName').textContent,
+                product: document.getElementById('modalProductDetails').textContent,
+                price: document.getElementById('modalPrice').textContent,
+                customer: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                gameId: document.getElementById('gameId').value,
+                gameName: document.getElementById('gameName').value,
+                timestamp: new Date().toLocaleString('ar-SD'),
+                orderId: 'NS-' + Date.now()
+            };
+            
+            // Simulate sending to Telegram Bot
+            setTimeout(() => {
+                // Here you would normally send to your Telegram Bot API
+                console.log('Order Data:', orderData);
+                
+                // Show success
+                document.getElementById('loading').classList.add('active');
+                
+                setTimeout(() => {
+                    document.getElementById('loading').classList.remove('active');
+                    closeOrderModal();
+                    document.getElementById('successModal').classList.add('active');
+                    
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+                }, 1500);
+            }, 1000);
+        }
+
+        function copyAccount() {
+            const accountNum = document.getElementById('accountNum').textContent;
+            navigator.clipboard.writeText(accountNum).then(() => {
+                showToast('تم نسخ رقم الحساب!');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function contactSupport() {
+            window.open('https://wa.me/249129361175', '_blank');
+        }
+
+        function setActiveNav(element) {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Close modals on outside click
+        document.getElementById('orderModal').addEventListener('click', function(e) {
+            if (e.target === this) closeOrderModal();
+        });
+
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
