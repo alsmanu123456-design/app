@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DRAGON ACCESS | نظام التحكم</title>
+    <style>
+        :root {
+            --primary: #ff003c;
+            --secondary: #00f2ff;
+            --bg-dark: #000000;
+            --panel-bg: rgba(10, 10, 10, 0.95);
+            --neon-glow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+            --cyan-glow: 0 0 15px var(--secondary), 0 0 30px var(--secondary);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); filter: hue-rotate(0deg); }
+            20% { transform: translate(-3px, 3px); filter: hue-rotate(90deg); }
+            40% { transform: translate(-3px, -3px); filter: hue-rotate(180deg); }
+            60% { transform: translate(3px, 3px); filter: hue-rotate(270deg); }
+            80% { transform: translate(3px, -3px); filter: hue-rotate(360deg); }
+            100% { transform: translate(0); filter: hue-rotate(0deg); }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes border-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        body, html {
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 999;
+            animation: scanline 8s linear infinite;
+        }
+
+        .profile-section {
+            text-align: center;
+            padding: 30px 20px 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 3px solid var(--primary);
+            box-shadow: var(--neon-glow);
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            box-shadow: var(--neon-glow);
+            animation: float 3s ease-in-out infinite;
+            object-fit: cover;
+            background: #111;
+        }
+
+        .channel-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, var(--secondary), #0088cc);
+            color: #000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: var(--cyan-glow);
+            transition: 0.3s;
+        }
+
+        .channel-link:hover {
+            transform: scale(1.1);
+        }
+
+        header {
+            padding: 25px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,0,60,0.2), transparent);
+            animation: border-flow 3s linear infinite;
+        }
+
+        .header-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin: 0;
+            animation: glitch 0.3s infinite ease-in-out alternate;
+            text-shadow: var(--neon-glow);
+            letter-spacing: 3px;
+        }
+
+        .header-sub {
+            letter-spacing: 5px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-top: 8px;
+            text-shadow: var(--cyan-glow);
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), #80001e);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin: 30px 0 15px;
+            border-right: 4px solid var(--primary);
+            padding-right: 12px;
+            text-shadow: var(--cyan-glow);
+            position: relative;
+            font-weight: bold;
+        }
+
+        .service-card {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .service-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255,0,60,0.15);
+        }
+
+        .service-card.featured {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(255,0,60,0.08), rgba(0,0,0,0.95));
+        }
+
+        .service-card.featured::after {
+            content: 'HOT';
+            position: absolute;
+            top: 10px; left: -25px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 30px;
+            transform: rotate(-45deg);
+            font-size: 0.65rem;
+            font-weight: bold;
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .icon {
+            width: 45px; height: 45px;
+            background: linear-gradient(45deg, var(--primary), #80001e);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            font-size: 1.3rem;
+            box-shadow: var(--neon-glow);
+        }
+
+        .service-card h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+
+        .features-list li {
+            color: #888;
+            font-size: 0.8rem;
+            margin: 6px 0;
+            padding-right: 18px;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: '▸';
+            position: absolute;
+            right: 0;
+            color: var(--primary);
+        }
+
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .price {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: var(--neon-glow);
+        }
+
+        .price .old-price {
+            font-size: 0.9rem;
+            color: #555;
+            text-decoration: line-through;
+            display: block;
+            font-weight: normal;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, var(--primary), #80001e);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: var(--neon-glow);
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--primary);
+        }
+
+        .contact-footer {
+            background: linear-gradient(180deg, #000, #111);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 2px solid var(--secondary);
+            margin-top: 40px;
+        }
+
+        .whatsapp-link {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            text-shadow: var(--cyan-glow);
+            padding: 12px 25px;
+            border: 2px solid var(--secondary);
+            border-radius: 40px;
+            transition: 0.3s;
+        }
+
+        .whatsapp-link:hover {
+            background: var(--secondary);
+            color: #000;
+        }
+
+        .voice-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.95);
+            border: 2px solid var(--secondary);
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 1000;
+            box-shadow: var(--cyan-glow);
+            max-width: 250px;
+        }
+
+        .voice-box.active {
+            display: block;
+            animation: pulse 1s infinite;
+        }
+
+        .voice-title {
+            color: var(--primary);
+            font-size: 0.8rem;
+            margin: 0 0 5px 0;
+            font-weight: bold;
+        }
+
+        .voice-text {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 480px) {
+            .header-title { font-size: 2rem; }
+            .price { font-size: 1.3rem; }
+            .buy-button { padding: 10px 20px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="crt-overlay"></div>
+<canvas id="matrix-canvas"></canvas>
+
+<div class="profile-section">
+    <img src="file_0000000032ac720ab5d5062041242b84.png" alt="Dragon Access" class="profile-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22140%22><rect width=%22100%%22 height=%22100%%22 fill=%22%23111%22/><text x=%2270%22 y=%2270%22 font-family=%22Arial%22 font-size=%2250%22 fill=%22%23ff003c%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>🐉</text></svg>'">
+    <div>
+        <a href="https://t.me/your_channel" class="channel-link" target="_blank">
+            📢 قناتي على تيليجرام
+        </a>
+    </div>
+</div>
+
+<header>
+    <div class="header-sub">نظام التحكم الرئيسي</div>
+    <h1 class="header-title">غسان</h1>
+    <div class="header-sub">اللقب: دراغون اكسس</div>
+    <div class="badge">🔴 متصل الآن</div>
+</header>
+
+<div class="container">
+
+    <div class="section-header">🔥 أدوات الاختراق المتاحة</div>
+
+    <div class="service-card featured">
+        <div class="service-header">
+            <div class="icon">📡</div>
+            <h3>زين انترنت مجاني 2026</h3>
+        </div>
+        <p>استمتع بثغرة زين، إنترنت مفتوح بدون حدود لعام كامل. ضمان عدم الحظر.</p>
+        <ul class="features-list">
+            <li>سرعة 4G بدون تقطيع</li>
+            <li>يعمل على جميع الأجهزة</li>
+            <li>تحديث تلقائي</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">25,000</span>
+                8,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد شراء انترنت زين بـ 8000 جنيه" class="buy-button" onclick="speak('تم اختيار باقة الانترنت')">شراء ⚡</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">🏦</div>
+            <h3>بنكك مهكر (وصول المطورين)</h3>
+        </div>
+        <p>تطبيق بنكك بنسخة المطورين، ميزات عرض الرصيد وتخطي الأمان.</p>
+        <ul class="features-list">
+            <li>واجهة المطورين الكاملة</li>
+            <li>تخطي التحقق الثنائي</li>
+            <li>تحويل بدون حدود</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">75,000</span>
+                20,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد بنكك المهكر بـ 20000 جنيه" class="buy-button" onclick="speak('طلب بنكك المهكر')">طلب 🏦</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">📶</div>
+            <h3>تطبيق المجال (اختراق واي فاي)</h3>
+        </div>
+        <p>اختراق أي شبكة واي فاي (WPA3/WPA2) خلال ثوانٍ.</p>
+        <ul class="features-list">
+            <li>فك تشفير جميع الحمايات</li>
+            <li>هجوم تلقائي</li>
+            <li>قاعدة بيانات ضخمة</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">15,000</span>
+                5,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد تطبيق المجال بـ 5000 جنيه" class="buy-button" onclick="speak('اختيار اختراق الواي فاي')">شراء 📡</a>
+        </div>
+    </div>
+
+    <div class="section-header">🛠️ أدوات احترافية</div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">🤖</div>
+            <h3>بوت تلغيم الروابط</h3>
+        </div>
+        <p>روابط ملغمة تسحب الصور والموقع الجغرافي للضحية بمجرد الضغط.</p>
+        <ul class="features-list">
+            <li>تتبع GPS دقيق</li>
+            <li>سحب المحادثات</li>
+            <li>تقارير يومية</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">35,000</span>
+                12,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد بوت التلغيم بـ 12000 جنيه" class="buy-button" onclick="speak('تفعيل بوت التلغيم')">تفعيل 🤖</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">🔓</div>
+            <h3>أداة اختراق السوشيال ميديا</h3>
+        </div>
+        <p>سكربتات بايثون لاختراق فيسبوك، واتساب، وانستقرام.</p>
+        <ul class="features-list">
+            <li>استخراج كوكيز الجلسات</li>
+            <li>تخطي المصادقة الثنائية</li>
+            <li>دعم فيسبوك وواتساب وانستقرام</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">50,000</span>
+                15,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد أداة السوشيال ميديا بـ 15000 جنيه" class="buy-button" onclick="speak('اختيار أداة السوشيال')">امتلاك 🔓</a>
+        </div>
+    </div>
+
+    <div class="section-header">⚡ أدوات إضافية</div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">📱</div>
+            <h3>أرقام وهمية (VIP)</h3>
+        </div>
+        <p>أرقام أمريكية وأوروبية لتفعيل واتساب وتيليجرام.</p>
+        <ul class="features-list">
+            <li>أرقام حقيقية غير مسجلة</li>
+            <li>تفعيل فوري</li>
+            <li>ضمان استبدال</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">5,000</span>
+                2,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد رقم وهمي بـ 2000 جنيه" class="buy-button" onclick="speak('طلب رقم وهمي')">احصل عليه 📱</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">💳</div>
+            <h3>فيزا وهمية (Generator)</h3>
+        </div>
+        <p>توليد فيزا كاردات وهمية للتفعيل والشراء.</p>
+        <ul class="features-list">
+            <li>CVV وتاريخ صلاحية فعال</li>
+            <li>تفعيل PayPal</li>
+            <li>تحديث يومي</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">12,000</span>
+                4,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد فيزا وهمية بـ 4000 جنيه" class="buy-button" onclick="speak('توليد فيزا وهمية')">توليد 💳</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">🎮</div>
+            <h3>تهكير ألعاب</h3>
+        </div>
+        <p>تفعيل جواهر وعملات مجانية في ببجي وفري فاير.</p>
+        <ul class="features-list">
+            <li>UC وجواهر مجانية</li>
+            <li>بطاقات جوجل بلاي</li>
+            <li>ضمان عدم الحظر</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">8,000</span>
+                3,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد تهكير ألعاب بـ 3000 جنيه" class="buy-button" onclick="speak('اختيار تهكير الألعاب')">اختراق 🎮</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">📧</div>
+            <h3>بريد مؤقت غير محدود</h3>
+        </div>
+        <p>بريد إلكتروني مؤقت غير محدود الصلاحية.</p>
+        <ul class="features-list">
+            <li>غير محدود الصلاحية</li>
+            <li>استقبال غير محدود</li>
+            <li>دعم جميع المواقع</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">3,000</span>
+                1,500 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد بريد مؤقت بـ 1500 جنيه" class="buy-button" onclick="speak('إنشاء بريد مؤقت')">إنشاء 📧</a>
+        </div>
+    </div>
+
+    <div class="service-card featured">
+        <div class="service-header">
+            <div class="icon">🌐</div>
+            <h3>VPN سحري (Ghost)</h3>
+        </div>
+        <p>اتصال آمن ومخفي بتصفح سريع وIP متغير.</p>
+        <ul class="features-list">
+            <li>سرعة فائقة</li>
+            <li>أكثر من 50 دولة</li>
+            <li>تشفير عسكري</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">6,000</span>
+                2,500 ج.س/شهر
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد VPN بـ 2500 جنيه شهرياً" class="buy-button" onclick="speak('تفعيل في بي ان')">تفعيل 🌐</a>
+        </div>
+    </div>
+
+    <div class="service-card">
+        <div class="service-header">
+            <div class="icon">📲</div>
+            <h3>استرجاع حسابات محذوفة</h3>
+        </div>
+        <p>استرجاع حسابات فيسبوك وواتساب المحذوفة.</p>
+        <ul class="features-list">
+            <li>استرجاع خلال 24 ساعة</li>
+            <li>حتى المحذوفة منذ سنوات</li>
+            <li>ضمان كامل</li>
+        </ul>
+        <div class="price-box">
+            <div class="price">
+                <span class="old-price">20,000</span>
+                10,000 ج.س
+            </div>
+            <a href="https://wa.me/249960506662?text=أريد استرجاع حساب بـ 10000 جنيه" class="buy-button" onclick="speak('بروتوكول الاسترجاع')">استرجاع 📲</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="contact-footer">
+    <div style="color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px;">
+        ⚡ تواصل مع دراغون اكسس مباشرة ⚡
+    </div>
+    <div style="color: #666; font-size: 0.85rem; margin-bottom: 15px;">
+        متواجد للرد الفوري 24 ساعة
+    </div>
+    <a href="https://wa.me/249960506662" class="whatsapp-link">
+        📱 +249960506662
+    </a>
+    <p style="font-size: 0.65rem; color: #444; margin-top: 25px;">
+        جميع الحقوق محفوظة | غسان دراغون اكسس<br>
+        <span style="color: #333;">تجربة أمنية وهمية للأغراض التعليمية</span>
+    </p>
+</div>
+
+<!-- صندوق النطق -->
+<div class="voice-box" id="voiceBox">
+    <p class="voice-title">🔊 النظام يتحدث</p>
+    <p class="voice-text" id="voiceText">جاري التحميل...</p>
+</div>
+
+<script>
+    // Matrix Background
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) drops[i] = 1;
+
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ff003c';
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(draw, 30);
+
+    // Text to Speech - نظام النطق العربي
+    const voiceBox = document.getElementById('voiceBox');
+    const voiceText = document.getElementById('voiceText');
+    let synth = window.speechSynthesis;
+    let isSpeaking = false;
+    let arabicVoice = null;
+
+    // البحث عن صوت عربي
+    function findArabicVoice() {
+        const voices = synth.getVoices();
+        arabicVoice = voices.find(v => v.lang.includes('ar')) || voices[0];
+    }
+    
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = findArabicVoice;
+    }
+    setTimeout(findArabicVoice, 1000);
+
+    function speak(text) {
+        if (!synth) {
+            console.log('النطق غير مدعوم في هذا المتصفح');
+            return;
+        }
+        
+        // إظهار صندوق النطق
+        voiceBox.classList.add('active');
+        voiceText.textContent = text;
+        
+        // إلغاء أي نطق سابق
+        synth.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        if (arabicVoice) utterance.voice = arabicVoice;
+        
+        utterance.onstart = () => {
+            isSpeaking = true;
+        };
+        
+        utterance.onend = () => {
+            isSpeaking = false;
+            setTimeout(() => {
+                if (!isSpeaking) voiceBox.classList.remove('active');
+            }, 2000);
+        };
+        
+        utterance.onerror = () => {
+            isSpeaking = false;
+            voiceBox.classList.remove('active');
+        };
+        
+        synth.speak(utterance);
+    }
+
+    // رسائل ترحيبية عند الدخول
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            speak("مرحباً بك في نظام دراغون اكسس. أنا غسان، المهندس الأمني. الموقع جاهز للاستخدام.");
+        }, 1500);
+        
+        setTimeout(() => {
+            speak("تنبيه. هذا الموقع للتجربة فقط. جميع الأدوات وهمية.");
+        }, 6000);
+    });
+
+    // رسائل عشوائية بالعربية
+    const arabicMessages = [
+        "النظام يعمل بكفاءة عالية",
+        "جميع الخوادم متصلة",
+        "لا يوجد اختراقات غير مصرح بها",
+        "قاعدة البيانات محمية",
+        "التشفير مفعل",
+        "جاهز لاستقبال الطلبات",
+        "دراغون اكسس يراقب",
+        "الأمان على أعلى مستوى"
+    ];
+
+    setInterval(() => {
+        if (Math.random() > 0.6 && !isSpeaking) {
+            const msg = arabicMessages[Math.floor(Math.random() * arabicMessages.length)];
+            speak(msg);
+        }
+    }, 20000);
+
+    // نطق عند النقر على أي مكان
+    let lastClick = 0;
+    document.addEventListener('click', (e) => {
+        const now = Date.now();
+        if (now - lastClick > 3000 && !isSpeaking) {
+            const clickMessages = ["تم تسجيل النقر", "أمر مستلم", "معالجة الطلب"];
+            const msg = clickMessages[Math.floor(Math.random() * clickMessages.length)];
+            speak(msg);
+            lastClick = now;
+        }
+    });
+
+    // نطق عند تحريك الماوس (مرة كل 15 ثانية)
+    let lastMouseMove = 0;
+    document.addEventListener('mousemove', () => {
+        const now = Date.now();
+        if (now - lastMouseMove > 15000 && !isSpeaking) {
+            speak("مستخدم نشط");
+            lastMouseMove = now;
+        }
+    });
+
+    // نطق عند الضغط على أزرار الشراء
+    document.querySelectorAll('.buy-button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            speak("جاري تحويلك إلى الواتساب");
+        });
+    });
+
+    // نطق عند الوقوف على البطاقات
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            if (!isSpeaking && Math.random() > 0.5) {
+                const title = this.querySelector('h3').textContent;
+                speak("أداة: " + title);
+            }
+        });
+    });
+
+    // إخفاء صندوق النطق عند البداية
+    setTimeout(() => {
+        if (!isSpeaking) voiceBox.classList.remove('active');
+    }, 10000);
+
+    // تعديل حجم Canvas عند تغيير الحجم
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    // رسائل في الكونسول
+    console.log("%cدراغون اكسس", "color: #ff003c; font-size: 30px; font-weight: bold;");
+    console.log("%cنظام تحكم المهندس غسان", "color: #00f2ff; font-size: 14px;");
+</script>
+
+</body>
+</html>
